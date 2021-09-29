@@ -7,6 +7,8 @@ const grid = [
     ['w', 'w', 'w', 'l', 'w', 'w'],
 ]
 
+
+
 const minimumIsland = (grid) => {
     let min = Infinity;
     const visited = new Set();
