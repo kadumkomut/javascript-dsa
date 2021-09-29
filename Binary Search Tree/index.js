@@ -100,6 +100,17 @@
         traversePostorder(this.root);
         return result;
     }
+    breadFirstSearch(){
+        let result = [];
+        let queue = [this.root];
+        while(queue.length>0){
+            let current = queue.shift();
+            result.push(current.data);
+            if(current.left) queue.push(current.left);
+            if(current.right) queue.push(current.right);
+        }
+        return result;
+    }
  }
 
  const bst = new BinaryTree(10);
@@ -108,6 +119,11 @@
  bst.insert(20);
  bst.insert(9)
 
-console.log(bst.preOrder())
-console.log(bst.postOrder())
-console.log(bst.inOrder())
+console.log("preorder = ",bst.preOrder())
+console.log("postorder = ",bst.postOrder())
+console.log("inorder = ",bst.inOrder())
+console.log("breadthFirstSearch = ",bst.breadFirstSearch())
+
+console.log("max = ",bst.max())
+console.log("min = ",bst.min())
+console.log("size = ",bst.size())
