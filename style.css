@@ -1,50 +1,26 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
-    display: grid;
-    place-items: center;
-    width: 100vw;
-    height: 100vh;
-}
+    margin: 0;
+  }
+  
+  .container {
+    background-color: #333;
+    padding: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .draggable {
+    padding: 1rem;
+    background-color: white;
+    border: 1px solid black;
+    cursor: move;
+  }
 
-.container {
-    width: 80%;
-    padding:10px;
-    display: grid;
-    grid-template-areas: "search message  message"
-                          "list message message";
-}
-
-input {
-    padding:10px;
-    width: 100%;
-    outline:none;
-    border:none;
-    border-radius: 10px;
-
-}
-
-input:focus {
-    background-color: lightblue;
-    transition: background-color ease-in-out 0.2s;
-}
-
-.search {
-    grid-area: search;
-    padding: 10px;
-    background-color: yellow;
-}
-.list {
-    grid-area: list;
-    padding: 10px;
-    background-color: red;
-}
-.message {
-    grid-area: message;
-    padding: 10px;
-    background-color: green;
-}
+  .draggable:-moz-drag-over {
+      color: red;
+  }
+ 
+  .draggable.dragging {
+    opacity: .5;
+    transition: all ease-in-out 0.2s;
+  }
+  
