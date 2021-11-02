@@ -85,17 +85,78 @@ function permutation(str,osf){
     }
 }
 
-function permutation1(str,osf,i){
+function permutation1(str,i){
     if(i>str.length-1){
-        console.log(osf);
+        console.log(str);
         return;
     }
     for(let j=i;j<str.length;j++){
         [str[j],str[i]] = [str[i],str[j]];
-        permutation1([...str],osf+","+str[i],i+1);
+        permutation1(str,i+1);
         [str[j],str[i]] = [str[i],str[j]];
     }
 }
+
+// backtracking
+function isItSafe(i,j,n,visited){
+    return (i>=0&&j>=0&&i<n&&j<n&&!visited.has(i+"-"+j));
+}
+function ratInAMaze(i,j,n,grid,visited,osf){
+    if(i==n-1&&j==n-1){
+        console.log(osf);
+        return;
+    }
+
+    if(!isItSafe(i,j,n,visited)){
+        // pruning
+        return;
+    }
+    visited.set(i+"-"+j,true)
+    if(i+1<n&&grid[i+1][j]==0){
+        ratInAMaze(i+1,j,n,grid,visited,osf + "D");
+    }
+    if(i-1>=0&&grid[i-1][j]==0){
+        ratInAMaze(i-1,j,n,grid,visited,osf + "U");
+    }
+    if(j+1<n&&grid[i][j+1]==0){
+        ratInAMaze(i,j+1,n,grid,visited,osf + "R");
+    }
+    if(j-1>=0&&grid[i][j-1]==0){
+        ratInAMaze(i,j-1,n,grid,visited,osf + "L");
+    }
+    osf = osf.slice(0,osf.length-1);
+    visited.delete(i+"-"+j);
+    return;
+}
+
+function subsetBacktracking(i,arr,res){
+    if(i==arr.length){
+        console.log(res);
+        return;
+    }
+    res.push(arr[i]);
+    subsetBacktracking(i+1,arr,res);
+    res.pop();
+    subsetBacktracking(i+1,arr,res);
+}
+function isItSafeToPlaceQueen(){
+
+}
+function NQueen(grid, curRow, n){
+    if(curRow===n){
+        console.log('found');
+        return;
+    }
+
+    for(let i=0;i<n;i++){
+        if(isItSafeToPlaceQueen()){
+            grid[curRow,i] = true;
+            NQueen(grid,curRow+1,n);
+            grid[curRow,i] = false;
+        }
+    }
+}
+
 // console.log(nPerson(10))
 // console.log(pow(2,102))
 // console.log(pattern(4))
@@ -105,4 +166,17 @@ function permutation1(str,osf,i){
 // stairCase(0,4,"")
 // console.log(lexicographicOrder(21,0,[]));
 // permutation("AACC","");
-// permutation1(["A","B","C"],"",0)
+// permutation1(["A","B","C"],0)
+// let maze = [
+//     [0,0,1,0,0,1,0],
+//     [1,0,1,1,0,0,0],
+//     [0,0,0,0,1,0,1],
+//     [1,0,1,0,0,0,0],
+//     [1,0,1,1,0,1,0],
+//     [1,0,0,0,0,1,0],
+//     [1,1,1,1,0,0,0]
+// ]
+// let visited = new Map();
+// ratInAMaze(0,0,maze.length,maze,visited,"");
+// subsetBacktracking(0,[1,2,3],[])
+NQueen(n);
