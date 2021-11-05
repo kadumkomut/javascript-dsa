@@ -139,20 +139,50 @@ function subsetBacktracking(i,arr,res){
     res.pop();
     subsetBacktracking(i+1,arr,res);
 }
-function isItSafeToPlaceQueen(){
-
+function isItSafeToPlaceQueen(grid, row, col, n){
+    // column check
+    for(let i=row-1;i>=0;i--){
+        if(grid[i][col]) return false;
+    }
+    // left upper diagonal check
+    for(let i=row-1,j=col-1;i>=0&&j>=0;i--,j--){
+        if(grid[i][j]) return false;
+    }
+    // right upper diagonal check
+    for(let i=row-1,j=col+1;i>=0&&j<n;i--,j++){
+        if(grid[i][j]) return false;
+    }
+    return true;
+}
+function display(grid,n){
+    let temp = [];
+    for(let i=0;i<n;i++){
+        let p = []
+        for(let j=0;j<n;j++){
+            if(grid[i][j]){
+                p.push("Q")
+            }else{
+                p.push('')
+            }
+        }
+        temp.push(p);
+    }
+    console.log(temp)
 }
 function NQueen(grid, curRow, n){
-    if(curRow===n){
-        console.log('found');
+    if(curRow==n){
+        let temp = [];
+        for(let i=0;i<n;i++){
+            temp.push(grid[i].join(''));
+        }
+        console.log(temp)
         return;
     }
-
     for(let i=0;i<n;i++){
-        if(isItSafeToPlaceQueen()){
-            grid[curRow,i] = true;
+        if(isItSafeToPlaceQueen(grid,curRow,i,n)){
+            grid[curRow][i] = true;
             NQueen(grid,curRow+1,n);
-            grid[curRow,i] = false;
+            grid[curRow][i] = false;
         }
     }
 }
@@ -179,4 +209,18 @@ function NQueen(grid, curRow, n){
 // let visited = new Map();
 // ratInAMaze(0,0,maze.length,maze,visited,"");
 // subsetBacktracking(0,[1,2,3],[])
-NQueen(n);
+function createGrid(n){
+    let grid = [];
+    for(let i=0;i<n;i++){
+        let temp = [];
+        for(let j=0;j<n;j++){
+            temp.push(false);
+        }
+        grid.push([...temp]);
+    }
+    return grid;
+}
+let n = 4;
+let grid = createGrid(n);
+console.log(grid);
+NQueen(grid, 0, n); 
